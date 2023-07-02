@@ -8,7 +8,6 @@ from starlette.status import (
     HTTP_302_FOUND,
 )
 from bson import ObjectId
-from passlib.hash import pbkdf2_sha256
 from config.db import conn
 from users.user_models import User
 from users.user_schema import user_entity, users_entity
@@ -41,9 +40,7 @@ def create_user(user: User):
 @user.put("/{id}", response_model=User, status_code=HTTP_202_ACCEPTED)
 def update_user_by_id(id: str, user: User):
     user_to_update = prepare_user_to_save(user)
-    conn.userdb.users.find_one_and_update(
-        {"_id": ObjectId(id)}, {"$set": user_to_update}
-    )
+    conn.userdb.users.find_one_and_update({"_id": ObjectId(id)}, {"$set": user_to_update})
     return user_entity(conn.userdb.users.find_one({"_id": ObjectId(id)}))
 
 
