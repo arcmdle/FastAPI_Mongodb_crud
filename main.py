@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routes.user import user
+from users.user_routes import user
 
 
 description = """
@@ -29,4 +29,5 @@ app = FastAPI(
     },
 )
 
-app.include_router(user,prefix='/users',tags=['Usuarios'])
+app.include_router(user, prefix="/users", tags=["Usuarios"])
+
